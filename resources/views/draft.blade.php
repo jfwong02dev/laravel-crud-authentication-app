@@ -1,11 +1,30 @@
 <!DOCTYPE html>
+<!--
+
+TABLE OF CONTENTS.
+
+Use search to find needed section.
+
+=====================================================
+
+|  1. $BODY                 |  Body                 |
+|  2. $MAIN_NAVIGATION      |  Main navigation      |
+|  3. $NAVBAR_ICON_BUTTONS  |  Navbar Icon Buttons  |
+|  4. $MAIN_MENU            |  Main menu            |
+|  5. $CONTENT              |  Content              |
+
+=====================================================
+
+-->
+
+
 <!--[if IE 8]>         <html class="ie8"> <![endif]-->
 <!--[if IE 9]>         <html class="ie9 gt-ie8"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="gt-ie8 gt-ie9 not-ie"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>Sign In - PixelAdmin</title>
+	<title>Blank - Pages - PixelAdmin</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
 	<!-- Open Sans font from Google CDN -->
@@ -14,42 +33,14 @@
 	<!-- Pixel Admin's stylesheets -->
 	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('css/pixel-admin.min.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('css/widgets.min.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('css/pages.min.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('css/rtl.min.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('css/themes.min.css') }}" rel="stylesheet" type="text/css">
 
-    <!-- favicon -->
-    <link rel="shortcut icon" href="{{{ asset('j-icon.png') }}}">
-
 	<!--[if lt IE 9]>
 		<script src="assets/javascripts/ie.min.js"></script>
 	<![endif]-->
-
-
-<!-- $DEMO =========================================================================================
-
-	Remove this section on production
--->
-	<style>
-		#signin-demo {
-			position: fixed;
-			right: 0;
-			bottom: 0;
-			z-index: 10000;
-			background: rgba(0,0,0,.6);
-			padding: 6px;
-			border-radius: 3px;
-		}
-		#signin-demo img { cursor: pointer; height: 40px; }
-		#signin-demo img:hover { opacity: .5; }
-		#signin-demo div {
-			color: #fff;
-			font-size: 10px;
-			font-weight: 600;
-			padding-bottom: 6px;
-		}
-	</style>
-<!-- / $DEMO -->
 
 </head>
 
@@ -60,98 +51,536 @@
 
 	Classes:
 	* 'theme-{THEME NAME}'
-	* 'right-to-left'     - Sets text direction to right-to-left
+	* 'right-to-left'      - Sets text direction to right-to-left
+	* 'main-menu-right'    - Places the main menu on the right side
+	* 'no-main-menu'       - Hides the main menu
+	* 'main-navbar-fixed'  - Fixes the main navigation
+	* 'main-menu-fixed'    - Fixes the main menu
+	* 'main-menu-animated' - Animate main menu
 -->
-<body class="theme-default page-signin">
+<body class="theme-default main-menu-animated">
+<script>var init = [];</script>
+<div id="main-wrapper">
 
-	<!-- Page background -->
-	<div id="page-signin-bg">
-		<!-- Background overlay -->
-		<div class="overlay"></div>
-		<!-- Replace this with your bg image -->
-		<img src="{{ asset('wooden.jpg') }}" alt="">
-	</div>
-	<!-- / Page background -->
 
-	<!-- Container -->
-	<div class="signin-container">
+<!-- 2. $MAIN_NAVIGATION ===========================================================================
 
-		<!-- Left side -->
-		<div class="signin-info">
-			<a href="index.html" class="logo">
-				<img src="{{ asset('demo/logo-big.png') }}" alt="" style="margin-top: -5px;">&nbsp;
-				PixelAdmin
-			</a> <!-- / .logo -->
-			<div class="slogan">
-				Simple. Flexible. Powerful.
-			</div> <!-- / .slogan -->
-			<ul>
-				<li><i class="fa fa-sitemap signin-icon"></i> Flexible modular structure</li>
-				<li><i class="fa fa-file-text-o signin-icon"></i> LESS &amp; SCSS source files</li>
-				<li><i class="fa fa-outdent signin-icon"></i> RTL direction support</li>
-				<li><i class="fa fa-heart signin-icon"></i> Crafted with love</li>
-			</ul> <!-- / Info list -->
-		</div>
-		<!-- / Left side -->
+	Main navigation
+-->
+	<div id="main-navbar" class="navbar navbar-inverse" role="navigation">
+		<!-- Main menu toggle -->
+		<button type="button" id="main-menu-toggle"><i class="navbar-icon fa fa-bars icon"></i><span class="hide-menu-text">HIDE MENU</span></button>
+		
+		<div class="navbar-inner">
+			<!-- Main navbar header -->
+			<div class="navbar-header">
 
-		<!-- Right side -->
-		<div class="signin-form">
+				<!-- Logo -->
+				<a href="index.html" class="navbar-brand">
+					<div><img alt="Pixel Admin" src="{{ asset('images/pixel-admin/main-navbar-logo.png') }}"></div>
+					PixelAdmin
+				</a>
 
-			<!-- Form -->
-            <form method="POST" action="{{ route('login') }}"  id="signin-form_id" aria-label="{{ __('Login') }}">
-                @csrf
-				<div class="signin-text">
-					<span>Sign In to your account</span>
-				</div> <!-- / .signin-text -->
+				<!-- Main navbar toggle -->
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse"><i class="navbar-icon fa fa-bars"></i></button>
 
-				<div class="form-group w-icon {{ $errors->has('email') ? 'has-error' : '' }}">
-					<input type="text" name="signin_username" id="username_id" class="form-control input-lg" placeholder="Username or email">
-					<span class="fa fa-user signin-form-icon"></span>
-				</div> <!-- / Username -->
+			</div> <!-- / .navbar-header -->
 
-				<div class="form-group w-icon {{ $errors->has('password') ? 'has-error' : '' }}">
-					<input type="password" name="signin_password" id="password_id" class="form-control input-lg" placeholder="Password">
-					<span class="fa fa-lock signin-form-icon"></span>
-				</div> <!-- / Password -->
+			<div id="main-navbar-collapse" class="collapse navbar-collapse main-navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="#">Home</a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>
+							<ul class="dropdown-menu">
+								<li><a href="#">First item</a></li>
+								<li><a href="#">Second item</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Third item</a></li>
+							</ul>
+						</li>
+					</ul> <!-- / .navbar-nav -->
 
-				<div class="form-actions">
-					<input type="submit" value="SIGN IN" class="signin-btn bg-primary">
-					<a href="#" class="forgot-password" id="forgot-password-link">Forgot your password?</a>
-				</div> <!-- / .form-actions -->
-			</form>
-			<!-- / Form -->
+					<div class="right clearfix">
+						<ul class="nav navbar-nav pull-right right-navbar-nav">
 
-			<!-- Password reset form -->
-			<div class="password-reset-form" id="password-reset-form">
-				<div class="header">
-					<div class="signin-text">
-						<span>Password reset</span>
-						<div class="close">&times;</div>
-					</div> <!-- / .signin-text -->
-				</div> <!-- / .header -->
-				
-				<!-- Form -->
-				<form action="index.html" id="password-reset-form_id">
-					<div class="form-group w-icon">
-						<input type="text" name="password_reset_email" id="p_email_id" class="form-control input-lg" placeholder="Enter your email">
-						<span class="fa fa-envelope signin-form-icon"></span>
-					</div> <!-- / Email -->
+<!-- 3. $NAVBAR_ICON_BUTTONS =======================================================================
 
-					<div class="form-actions">
-						<input type="submit" value="SEND PASSWORD RESET LINK" class="signin-btn bg-primary">
-					</div> <!-- / .form-actions -->
-				</form>
-				<!-- / Form -->
+							Navbar Icon Buttons
+
+							NOTE: .nav-icon-btn triggers a dropdown menu on desktop screens only. On small screens .nav-icon-btn acts like a hyperlink.
+
+							Classes:
+							* 'nav-icon-btn-info'
+							* 'nav-icon-btn-success'
+							* 'nav-icon-btn-warning'
+							* 'nav-icon-btn-danger' 
+-->
+							<li class="nav-icon-btn nav-icon-btn-danger dropdown">
+								<a href="#notifications" class="dropdown-toggle" data-toggle="dropdown">
+									<span class="label">5</span>
+									<i class="nav-icon fa fa-bullhorn"></i>
+									<span class="small-screen-text">Notifications</span>
+								</a>
+
+								<!-- NOTIFICATIONS -->
+								
+								<!-- Javascript -->
+								<script>
+									init.push(function () {
+										$('#main-navbar-notifications').slimScroll({ height: 250 });
+									});
+								</script>
+								<!-- / Javascript -->
+
+								<div class="dropdown-menu widget-notifications no-padding" style="width: 300px">
+									<div class="notifications-list" id="main-navbar-notifications">
+
+										<div class="notification">
+											<div class="notification-title text-danger">SYSTEM</div>
+											<div class="notification-description"><strong>Error 500</strong>: Syntax error in index.php at line <strong>461</strong>.</div>
+											<div class="notification-ago">12h ago</div>
+											<div class="notification-icon fa fa-hdd-o bg-danger"></div>
+										</div> <!-- / .notification -->
+
+										<div class="notification">
+											<div class="notification-title text-info">STORE</div>
+											<div class="notification-description">You have <strong>9</strong> new orders.</div>
+											<div class="notification-ago">12h ago</div>
+											<div class="notification-icon fa fa-truck bg-info"></div>
+										</div> <!-- / .notification -->
+
+										<div class="notification">
+											<div class="notification-title text-default">CRON DAEMON</div>
+											<div class="notification-description">Job <strong>"Clean DB"</strong> has been completed.</div>
+											<div class="notification-ago">12h ago</div>
+											<div class="notification-icon fa fa-clock-o bg-default"></div>
+										</div> <!-- / .notification -->
+
+										<div class="notification">
+											<div class="notification-title text-success">SYSTEM</div>
+											<div class="notification-description">Server <strong>up</strong>.</div>
+											<div class="notification-ago">12h ago</div>
+											<div class="notification-icon fa fa-hdd-o bg-success"></div>
+										</div> <!-- / .notification -->
+
+										<div class="notification">
+											<div class="notification-title text-warning">SYSTEM</div>
+											<div class="notification-description"><strong>Warning</strong>: Processor load <strong>92%</strong>.</div>
+											<div class="notification-ago">12h ago</div>
+											<div class="notification-icon fa fa-hdd-o bg-warning"></div>
+										</div> <!-- / .notification -->
+
+									</div> <!-- / .notifications-list -->
+									<a href="#" class="notifications-link">MORE NOTIFICATIONS</a>
+								</div> <!-- / .dropdown-menu -->
+							</li>
+							<li class="nav-icon-btn nav-icon-btn-success dropdown">
+								<a href="mail.ru" class="dropdown-toggle" data-toggle="dropdown">
+									<span class="label">10</span>
+									<i class="nav-icon fa fa-envelope"></i>
+									<span class="small-screen-text">Income messages</span>
+								</a>
+
+								<!-- MESSAGES -->
+								
+								<!-- Javascript -->
+								<script>
+									init.push(function () {
+										$('#main-navbar-messages').slimScroll({ height: 250 });
+									});
+								</script>
+								<!-- / Javascript -->
+
+								<div class="dropdown-menu widget-messages-alt no-padding" style="width: 300px;">
+									<div class="messages-list" id="main-navbar-messages">
+
+										<div class="message">
+											<img src="{{ asset('demo/avatars/2.jpg') }}" alt="" class="message-avatar">
+											<a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
+											<div class="message-description">
+												from <a href="#">Robert Jang</a>
+												&nbsp;&nbsp;·&nbsp;&nbsp;
+												2h ago
+											</div>
+										</div> <!-- / .message -->
+
+										<div class="message">
+											<img src="{{ asset('demo/avatars/3.jpg') }}" alt="" class="message-avatar">
+											<a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
+											<div class="message-description">
+												from <a href="#">Michelle Bortz</a>
+												&nbsp;&nbsp;·&nbsp;&nbsp;
+												2h ago
+											</div>
+										</div> <!-- / .message -->
+
+										<div class="message">
+											<img src="{{ asset('demo/avatars/4.jpg') }}" alt="" class="message-avatar">
+											<a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
+											<div class="message-description">
+												from <a href="#">Timothy Owens</a>
+												&nbsp;&nbsp;·&nbsp;&nbsp;
+												2h ago
+											</div>
+										</div> <!-- / .message -->
+
+										<div class="message">
+											<img src="{{ asset('demo/avatars/5.jpg') }}" alt="" class="message-avatar">
+											<a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
+											<div class="message-description">
+												from <a href="#">Denise Steiner</a>
+												&nbsp;&nbsp;·&nbsp;&nbsp;
+												2h ago
+											</div>
+										</div> <!-- / .message -->
+
+										<div class="message">
+											<img src="{{ asset('demo/avatars/2.jpg') }}" alt="" class="message-avatar">
+											<a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
+											<div class="message-description">
+												from <a href="#">Robert Jang</a>
+												&nbsp;&nbsp;·&nbsp;&nbsp;
+												2h ago
+											</div>
+										</div> <!-- / .message -->
+
+										<div class="message">
+											<img src="{{ asset('demo/avatars/2.jpg') }}" alt="" class="message-avatar">
+											<a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
+											<div class="message-description">
+												from <a href="#">Robert Jang</a>
+												&nbsp;&nbsp;·&nbsp;&nbsp;
+												2h ago
+											</div>
+										</div> <!-- / .message -->
+
+										<div class="message">
+											<img src="{{ asset('demo/avatars/3.jpg') }}" alt="" class="message-avatar">
+											<a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
+											<div class="message-description">
+												from <a href="#">Michelle Bortz</a>
+												&nbsp;&nbsp;·&nbsp;&nbsp;
+												2h ago
+											</div>
+										</div> <!-- / .message -->
+
+										<div class="message">
+											<img src="{{ asset('demo/avatars/4.jpg') }}" alt="" class="message-avatar">
+											<a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
+											<div class="message-description">
+												from <a href="#">Timothy Owens</a>
+												&nbsp;&nbsp;·&nbsp;&nbsp;
+												2h ago
+											</div>
+										</div> <!-- / .message -->
+
+										<div class="message">
+											<img src="{{ asset('demo/avatars/5.jpg') }}" alt="" class="message-avatar">
+											<a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
+											<div class="message-description">
+												from <a href="#">Denise Steiner</a>
+												&nbsp;&nbsp;·&nbsp;&nbsp;
+												2h ago
+											</div>
+										</div> <!-- / .message -->
+
+										<div class="message">
+											<img src="{{ asset('demo/avatars/2.jpg') }}" alt="" class="message-avatar">
+											<a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
+											<div class="message-description">
+												from <a href="#">Robert Jang</a>
+												&nbsp;&nbsp;·&nbsp;&nbsp;
+												2h ago
+											</div>
+										</div> <!-- / .message -->
+
+									</div> <!-- / .messages-list -->
+									<a href="#" class="messages-link">MORE MESSAGES</a>
+								</div> <!-- / .dropdown-menu -->
+							</li>
+<!-- /3. $END_NAVBAR_ICON_BUTTONS -->
+
+							<li>
+								<form class="navbar-form pull-left">
+									<input type="text" class="form-control" placeholder="Search">
+								</form>
+							</li>
+
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
+									<img src="{{ asset('demo/avatars/1.jpg') }}" alt="">
+									<span>John Doe</span>
+								</a>
+								<ul class="dropdown-menu">
+									<li><a href="#"><span class="label label-warning pull-right">New</span>Profile</a></li>
+									<li><a href="#"><span class="badge badge-primary pull-right">New</span>Account</a></li>
+									<li><a href="#"><i class="dropdown-icon fa fa-cog"></i>&nbsp;&nbsp;Settings</a></li>
+									<li class="divider"></li>
+									<li><a href="pages-signin.html"><i class="dropdown-icon fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+								</ul>
+							</li>
+						</ul> <!-- / .navbar-nav -->
+					</div> <!-- / .right -->
+				</div>
+			</div> <!-- / #main-navbar-collapse -->
+		</div> <!-- / .navbar-inner -->
+	</div> <!-- / #main-navbar -->
+<!-- /2. $END_MAIN_NAVIGATION -->
+
+
+<!-- 4. $MAIN_MENU =================================================================================
+
+		Main menu
+		
+		Notes:
+		* to make the menu item active, add a class 'active' to the <li>
+		  example: <li class="active">...</li>
+		* multilevel submenu example:
+			<li class="mm-dropdown">
+			  <a href="#"><span class="mm-text">Submenu item text 1</span></a>
+			  <ul>
+				<li>...</li>
+				<li class="mm-dropdown">
+				  <a href="#"><span class="mm-text">Submenu item text 2</span></a>
+				  <ul>
+					<li>...</li>
+					...
+				  </ul>
+				</li>
+				...
+			  </ul>
+			</li>
+-->
+	<div id="main-menu" role="navigation">
+		<div id="main-menu-inner">
+			<div class="menu-content top" id="menu-content-demo">
+				<!-- Menu custom content demo
+					 CSS:        styles/pixel-admin-less/demo.less or styles/pixel-admin-scss/_demo.scss
+					 Javascript: html/assets/demo/demo.js
+				 -->
+				<div>
+					<div class="text-bg"><span class="text-slim">Welcome,</span> <span class="text-semibold">John</span></div>
+
+					<img src="{{ asset('demo/avatars/1.jpg') }}" alt="" class="">
+					<div class="btn-group">
+						<a href="#" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-envelope"></i></a>
+						<a href="#" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-user"></i></a>
+						<a href="#" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-cog"></i></a>
+						<a href="#" class="btn btn-xs btn-danger btn-outline dark"><i class="fa fa-power-off"></i></a>
+					</div>
+				</div>
 			</div>
-			<!-- / Password reset form -->
-		</div>
-		<!-- Right side -->
-	</div>
-	<!-- / Container -->
+			<ul class="navigation">
+				<li>
+					<a href="index.html"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
+				</li>
+				<li class="mm-dropdown">
+					<a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Layouts</span><span class="label label-warning">Updated</span></a>
+					<ul>
+						<li>
+							<a tabindex="-1" href="layouts-grid.html"><span class="mm-text">Grid</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="layouts-main-menu.html"><i class="menu-icon fa fa-th-list"></i><span class="mm-text">Main menu</span><span class="label label-warning">Updated</span></a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="stat-panels.html"><i class="menu-icon fa fa-tasks"></i><span class="mm-text">Stat panels</span></a>
+				</li>
+				<li>
+					<a href="widgets.html"><i class="menu-icon fa fa-flask"></i><span class="mm-text">Widgets</span></a>
+				</li>
+				<li class="mm-dropdown">
+					<a href="#"><i class="menu-icon fa fa-desktop"></i><span class="mm-text">UI elements</span></a>
+					<ul>
+						<li>
+							<a tabindex="-1" href="ui-buttons.html"><span class="mm-text">Buttons</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="ui-typography.html"><span class="mm-text">Typography</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="ui-tabs.html"><span class="mm-text">Tabs &amp; Accordions</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="ui-modals.html"><span class="mm-text">Modals</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="ui-alerts.html"><span class="mm-text">Alerts &amp; Tooltips</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="ui-components.html"><span class="mm-text">Components</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="ui-panels.html"><span class="mm-text">Panels</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="ui-jqueryui.html"><span class="mm-text">jQuery UI</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="ui-icons.html"><span class="mm-text">Icons</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="ui-utility-classes.html"><span class="mm-text">Utility classes</span></a>
+						</li>
+					</ul>
+				</li>
+				<li class="mm-dropdown">
+					<a href="#"><i class="menu-icon fa fa-check-square"></i><span class="mm-text">Form components</span></a>
+					<ul>
+						<li>
+							<a tabindex="-1" href="forms-layouts.html"><span class="mm-text">Layouts</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="forms-general.html"><span class="mm-text">General</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="forms-advanced.html"><span class="mm-text">Advanced</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="forms-pickers.html"><span class="mm-text">Pickers</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="forms-validation.html"><span class="mm-text">Validation</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="forms-editors.html"><span class="mm-text">Editors</span></a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="tables.html"><i class="menu-icon fa fa-table"></i><span class="mm-text">Tables</span></a>
+				</li>
+				<li>
+					<a href="charts.html"><i class="menu-icon fa fa-bar-chart-o"></i><span class="mm-text">Charts</span></a>
+				</li>
+				<li class="mm-dropdown">
+					<a href="#"><i class="menu-icon fa fa-files-o"></i><span class="mm-text">Pages</span><span class="label label-success">16</span></a>
+					<ul>
+						<li>
+							<a tabindex="-1" href="pages-search.html"><span class="mm-text">Search results</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="pages-pricing.html"><span class="mm-text">Plans &amp; pricing</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="pages-faq.html"><span class="mm-text">FAQ</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="pages-profile.html"><span class="mm-text">Profile</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="pages-timeline.html"><span class="mm-text">Timeline</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="pages-signin.html"><span class="mm-text">Sign In</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="pages-signup.html"><span class="mm-text">Sign Up</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="pages-signin-alt.html"><span class="mm-text">Sign In Alt</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="pages-signup-alt.html"><span class="mm-text">Sign Up Alt</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="pages-invoice.html"><span class="mm-text">Invoice</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="pages-404.html"><span class="mm-text">Error 404</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="pages-500.html"><span class="mm-text">Error 500</span></a>
+						</li>
+						<li class="mm-dropdown">
+							<a href="#"><i class="menu-icon fa fa-envelope"></i><span class="mm-text">Messages</span></a>
+							<ul>
+								<li>
+									<a tabindex="-1" href="pages-inbox.html"><span class="mm-text">Inbox</span></a>
+								</li>
+								<li>
+									<a tabindex="-1" href="pages-show-email.html"><span class="mm-text">Show message</span></a>
+								</li>
+								<li>
+									<a tabindex="-1" href="pages-new-email.html"><span class="mm-text">New message</span></a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a tabindex="-1" href="pages-blank.html"><span class="mm-text">Blank page</span></a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="complete-ui.html"><i class="menu-icon fa fa-briefcase"></i><span class="mm-text">Complete UI</span></a>
+				</li>
+				<li>
+					<a href="color-builder.html"><i class="menu-icon fa fa-tint"></i><span class="mm-text">Color Builder</span></a>
+				</li>
+				<li class="mm-dropdown">
+					<a href="#"><i class="menu-icon fa fa-sitemap"></i><span class="mm-text">Menu levels</span><span class="badge badge-primary">6</span></a>
+					<ul>
+						<li>
+							<a tabindex="-1" href="#"><span class="mm-text">Menu level 1.1</span><span class="badge badge-danger">12</span><span class="label label-info">21</span></a>
+						</li>
+						<li>
+							<a tabindex="-1" href="#"><span class="mm-text">Menu level 1.2</span></a>
+						</li>
+						<li class="mm-dropdown">
+							<a tabindex="-1" href="#"><span class="mm-text">Menu level 1.3</span><span class="label label-warning">5</span></a>
+							<ul>
+								<li>
+									<a tabindex="-1" href="#"><span class="mm-text">Menu level 2.1</span></a>
+								</li>
+								<li class="mm-dropdown">
+									<a tabindex="-1" href="#"><span class="mm-text">Menu level 2.2</span></a>
+									<ul>
+										<li class="mm-dropdown">
+											<a tabindex="-1" href="#"><span class="mm-text">Menu level 3.1</span></a>
+											<ul>
+												<li>
+													<a tabindex="-1" href="#"><span class="mm-text">Menu level 4.1</span></a>
+												</li>
+											</ul>
+										</li>
+										<li>
+											<a tabindex="-1" href="#"><span class="mm-text">Menu level 3.2</span></a>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<a tabindex="-1" href="#"><span class="mm-text">Menu level 2.2</span></a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul> <!-- / .navigation -->
+			<div class="menu-content">
+				<a href="pages-invoice.html" class="btn btn-primary btn-block btn-outline dark">Create Invoice</a>
+			</div>
+		</div> <!-- / #main-menu-inner -->
+	</div> <!-- / #main-menu -->
+<!-- /4. $MAIN_MENU -->
 
-	<div class="not-a-member">
-		Not a member? <a href="pages-signup.html">Sign up now</a>
-	</div>
+
+	<div id="content-wrapper">
+<!-- 5. $CONTENT ===================================================================================
+
+		Content
+-->
+
+		<!-- Content here -->
+		Content here.
+
+	</div> <!-- / #content-wrapper -->
+	<div id="main-menu-bg"></div>
+</div> <!-- / #main-wrapper -->
 
 <!-- Get jQuery from Google CDN -->
 <!--[if !IE]> -->
@@ -161,69 +590,16 @@
 	<script type="text/javascript"> window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">'+"<"+"/script>"); </script>
 <![endif]-->
 
+<!-- <script src="jquery.transit.js"></script> -->
 
 <!-- Pixel Admin's javascripts -->
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/pixel-admin.min.js') }}"></script>
 
 <script type="text/javascript">
-    var init=[]
-	// Resize BG
 	init.push(function () {
-		var $ph  = $('#page-signin-bg'),
-		    $img = $ph.find('> img');
-
-		$(window).on('resize', function () {
-			$img.attr('style', '');
-			if ($img.height() < $ph.height()) {
-				$img.css({
-					height: '100%',
-					width: 'auto'
-				});
-			}
-		});
+		// Javascript code here
 	});
-
-	// Show/Hide password reset form on click
-	init.push(function () {
-		$('#forgot-password-link').click(function () {
-			$('#password-reset-form').fadeIn(400);
-			return false;
-		});
-		$('#password-reset-form .close').click(function () {
-			$('#password-reset-form').fadeOut(400);
-			return false;
-		});
-	});
-
-	// Setup Sign In form validation
-	init.push(function () {
-		$("#signin-form_id").validate({ focusInvalid: true, errorPlacement: function () {} });
-		
-		// Validate username
-		$("#username_id").rules("add", {
-			required: true,
-			minlength: 3
-		});
-
-		// Validate password
-		$("#password_id").rules("add", {
-			required: true,
-			minlength: 6
-		});
-	});
-
-	// Setup Password Reset form validation
-	init.push(function () {
-		$("#password-reset-form_id").validate({ focusInvalid: true, errorPlacement: function () {} });
-		
-		// Validate email
-		$("#p_email_id").rules("add", {
-			required: true,
-			email: true
-		});
-	});
-
 	window.PixelAdmin.start(init);
 </script>
 
